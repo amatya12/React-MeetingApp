@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// Import React
+import React, { Component } from 'react';
+import { Router } from '@reach/router';
+import firebase from './Firebase';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Home from './Home';
+import Navigation from './Navigation';
+import Welcome from './Welcome';
+import Login from './Login';
+import Register from './Register';
+import Mettings from './Meetings';
+
+
+class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      user: 'Aakash Amatya'
+    }
+  }
+
+  componentDidMount() {
+    const ref = firebase.database().ref('user');
+
+    ref.on('value', snapshot => {
+      let FBUser = snapshot.val();
+      this.setState({ user: FBUser });
+    });
+  }
+  render() {
+
+    return (
+      <div>
+        <Navigation user={this.state.user} />
+        {this.state.user && (
+          <Welcome user={this.state.user} />
+        )}
+        <Router>
+          <Home path="/" user={this.state.user} />
+          <Login path="/login" user={this.state.user} />
+          <Mettings path="/meetings" user={this.state.user} />
+          <Register path="/register" user={this.state.user} />
+        </Router>
+      </div>
+    );
+
+  }
 }
 
 export default App;
