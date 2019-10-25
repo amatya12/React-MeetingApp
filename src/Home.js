@@ -8,7 +8,6 @@ class Home extends Component {
 
             <div className="container text-center">
                 <div className="row justify-content-center">
-                    Hello {user}
                     <div className="col-10 col-md-10 col-lg-8 col-xl-7">
                         <div className="display-4 text-primary mt-3 mb-2">
                             Meeting Log
