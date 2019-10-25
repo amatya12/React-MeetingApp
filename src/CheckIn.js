@@ -32,7 +32,7 @@ class CheckIn extends Component {
             attendeeEmail: this.state.email
         });
 
-        navigate(`/attendees/${this.props.userID}/${this / this.props.meetingID}`)
+        navigate(`/attendees/${this.props.userID}/${this.props.meetingID}`)
     }
 
     render() {
