@@ -9,6 +9,7 @@ import Welcome from './Welcome';
 import Login from './Login';
 import Register from './Register';
 import Mettings from './Meetings';
+import CheckIn from './CheckIn';
 
 
 class App extends Component {
@@ -110,6 +111,9 @@ class App extends Component {
             userID={this.state.userID}
           />
           <Register path="/register" user={this.state.user} registerUser={this.registerUser} />
+          <CheckIn
+            path="/checkin/:userID/:meetingID"
+          />
         </Router>
       </div>
     );
