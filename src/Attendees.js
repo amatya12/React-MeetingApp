@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from './Firebase';
 import AttendeeList from './AttendeeList';
-import { FaUndo } from 'react-icons/fa';
+import { FaUndo, FaRandom } from 'react-icons/fa';
 
 
 
@@ -11,7 +11,8 @@ class Attendees extends Component {
 
         this.state = {
             searchQuery: '',
-            displayAttendees: []
+            displayAttendees: [],
+            allAttendees: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.resetQuery = this.resetQuery.bind(this);
@@ -33,6 +34,7 @@ class Attendees extends Component {
                 });
             }
             this.setState({
+                allAttendees: attendeesList,
                 displayAttendees: attendeesList
             })
         });
@@ -48,8 +50,20 @@ class Attendees extends Component {
         });
     }
 
+    chooseRandom() {
+        const randomAttendee = Math.floor(Math.random() * this.state.allAttendees.length);
+        this.resetQuery();
+        this.setState({
+            displayAttendees: [this.state.allAttendees[randomAttendee]]
+        })
+    }
+
     resetQuery = () => {
-        this.setState({ searchQuery: '' });
+
+        this.setState({
+            searchQuery: '',
+            displayAttendees: this.state.allAttendees
+        });
     }
     render() {
 
@@ -82,6 +96,12 @@ class Attendees extends Component {
                                         className="form-control"
                                         onChange={this.handleChange}
                                     />
+                                    <button className="btn btn-sm btn-outline-info"
+                                        title="pick a random attendee"
+                                        onClick={() => this.chooseRandom()}
+                                    >
+                                        <FaRandom />
+                                    </button>
                                     <div className="input-group-append">
                                         <button className="btn btn-sm btn-outline-info"
                                             title="Reset search"
